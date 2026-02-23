@@ -142,9 +142,6 @@ Open running task
 
 Confirm Capacity Provider shows Fargate Spot
 
-Access application:
-
-http://PUBLIC_IP:1337/admin
 Cost Optimization
 
 Fargate Spot uses spare AWS capacity, reducing compute cost compared to standard Fargate.
@@ -165,8 +162,6 @@ Dockerfile          → Container definition
 Author
 
 Namit Agrawal
----
 
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
 
 
