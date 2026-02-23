@@ -63,139 +63,110 @@ This project demonstrates how to deploy a Strapi application on AWS using ECS Fa
 
 ---
 
-## 🧱 Architecture
+# Strapi Deployment on AWS ECS using Fargate Spot (Terraform + CI/CD)
 
-- Dockerized Strapi application
-- Amazon ECR for container image storage
-- AWS ECS Fargate for serverless container hosting
-- Terraform for Infrastructure as Code
-- GitHub Actions for CI/CD automation
-- CloudWatch for logs, metrics, and alarms
+## Project Overview
+
+This project demonstrates how to deploy a containerized Strapi application on AWS using ECS with Fargate Spot. The infrastructure is provisioned using Terraform, and deployment is automated using GitHub Actions. The service runs on Fargate Spot to optimize cost, and CloudWatch logging is intentionally not used as per task requirements.
 
 ---
 
-## ⚙️ Features
+## Architecture
 
-- ✅ Automated Docker build and push to ECR
-- ✅ Infrastructure provisioning via Terraform
-- ✅ ECS Fargate deployment
-- ✅ CloudWatch logging integration
-- ✅ CPU and Memory monitoring with alarms
-- ✅ Fully automated deployment pipeline
-
----
-
-## 📂 Project Structure
-
-```
-.
-├── terraform/
-│   ├── main.tf
-│   ├── ecs.tf
-│   ├── ecr.tf
-│   ├── iam.tf
-│   ├── variables.tf
-│   ├── cloudwatch.tf
-│   └── alarms.tf
-├── .github/workflows/
-│   └── deploy.yml
-├── Dockerfile
-├── package.json
-└── README.md
-```
+- Strapi application containerized using Docker
+- Docker image stored in Amazon ECR
+- Infrastructure created using Terraform
+- ECS Cluster and Service run on Fargate Spot
+- Public access enabled on port 1337
+- CI/CD pipeline builds and deploys automatically
 
 ---
 
-## 🔄 CI/CD Workflow
+## Technologies Used
 
-GitHub Actions performs:
-
-1. Checkout code
-2. Configure AWS credentials
-3. Build Docker image
-4. Push image to ECR
-5. Run Terraform to deploy/update infrastructure
-6. Update ECS task revision automatically
+- AWS ECS
+- AWS Fargate Spot
+- Amazon ECR
+- Terraform
+- Docker
+- GitHub Actions
+- Strapi (Node.js)
 
 ---
 
-## ☁️ Deployment Steps
+## Deployment Flow
 
-1. Clone repository
+1. Dockerfile builds the Strapi container image
+2. GitHub Actions builds and pushes image to ECR
+3. Terraform provisions AWS infrastructure
+4. ECS service runs the container on Fargate Spot
+5. Application becomes accessible via public IP
+
+---
+
+## Terraform Resources
+
+- ECS Cluster
+- ECS Task Definition
+- ECS Service (Fargate Spot)
+- Security Group
+- IAM Role
+- ECR Repository
+
+---
+
+## Key Configuration
+
+- Port 1337 exposed for Strapi
+- Public IP assigned to ECS task
+- Capacity provider set to FARGATE_SPOT
+- CloudWatch logging removed
+
+---
+
+## How to Deploy
+
+### 1. Initialize Terraform
 
 ```bash
-git clone https://github.com/namitagrawal2001/strapi-ecs-fargate-terraform.git
-cd strapi-ecs-fargate-terraform
-```
-
-2. Initialize Terraform
-
-```bash
-cd terraform
 terraform init
-```
-
-3. Apply infrastructure
-
-```bash
+2. Plan Infrastructure
+terraform plan
+3. Apply Changes
 terraform apply
-```
+Verify Deployment
 
-4. Push code to trigger CI/CD
+Go to AWS Console → ECS → Cluster
 
-```bash
-git push origin main
-```
+Open running task
 
----
+Confirm Capacity Provider shows Fargate Spot
 
-## 📊 Monitoring
+Access application:
 
-CloudWatch provides:
+http://PUBLIC_IP:1337/admin
+Cost Optimization
 
-- CPU Utilization metrics
-- Memory Utilization metrics
-- Network traffic metrics
-- Application logs
-- Alarm notifications
+Fargate Spot uses spare AWS capacity, reducing compute cost compared to standard Fargate.
 
----
+What Was Changed for Task
 
-## 🧪 Verification
+Switched ECS service from Fargate to Fargate Spot
 
-- ECS service running with active task
-- Application accessible via public IP
-- Admin panel functional
-- Logs visible in CloudWatch
-- Metrics updating in dashboard
+Removed CloudWatch logging configuration
 
----
+Verified deployment in ECS console
 
-## 🧹 Cleanup
+Repository Structure
+app/                → Strapi application
+terraform/          → Infrastructure code
+.github/workflows/  → CI/CD pipeline
+Dockerfile          → Container definition
+Author
 
-To destroy infrastructure:
-
-```bash
-terraform destroy
-```
-
----
-
-## 👤 Author
-
-**Namit Agrawal**
-
-GitHub: https://github.com/namitagrawal2001  
-Project Repo: https://github.com/namitagrawal2001/strapi-ecs-fargate-terraform  
-
----
-
-## 📜 License
-
-This project is for learning and demonstration purposes.
-
-
+Namit Agrawal
 ---
 
 <sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+
 
